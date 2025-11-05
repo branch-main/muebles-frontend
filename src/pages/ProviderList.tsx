@@ -12,11 +12,14 @@ export default function ProviderList() {
     try {
       setLoading(true);
       const response = await providerService.getAll();
-      setProviders(response.data);
+      const data = response.data;
+      // Ensure we always have an array
+      setProviders(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
       setError("Failed to load providers");
       console.error(err);
+      setProviders([]);
     } finally {
       setLoading(false);
     }

@@ -15,11 +15,14 @@ export default function FurnitureList() {
     try {
       setLoading(true);
       const response = await furnitureService.getAll();
-      setFurniture(response.data);
+      const data = response.data;
+      // Ensure we always have an array
+      setFurniture(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
       setError('Failed to load furniture');
       console.error(err);
+      setFurniture([]);
     } finally {
       setLoading(false);
     }
