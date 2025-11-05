@@ -57,7 +57,7 @@ export default function ProviderList() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {providers.map((provider) => (
+        {Array.isArray(providers) && providers.map((provider) => (
           <div key={provider.id} className="border rounded-lg p-4 shadow-lg">
             <h2 className="text-xl font-semibold mb-2">{provider.name}</h2>
             <p className="text-gray-600">City: {provider.city}</p>

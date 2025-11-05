@@ -22,7 +22,9 @@ export default function FurnitureForm() {
     const loadData = async () => {
       try {
         const providersRes = await providerService.getAll();
-        setProviders(providersRes.data);
+        const providersData = providersRes.data;
+        // Ensure we always have an array
+        setProviders(Array.isArray(providersData) ? providersData : []);
 
         if (id) {
           const furnitureRes = await furnitureService.getById(parseInt(id));
@@ -38,6 +40,7 @@ export default function FurnitureForm() {
       } catch (err) {
         console.error(err);
         alert("Failed to load data");
+        setProviders([]);
       }
     };
     loadData();
@@ -80,7 +83,7 @@ export default function FurnitureForm() {
             required
           >
             <option value={0}>Select a provider</option>
-            {providers.map((p) => (
+            {Array.isArray(providers) && providers.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
               </option>
